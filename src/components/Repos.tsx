@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { Paper } from "@mui/material";
+import { Container } from "@mui/material";
+import { Box } from "@mui/material";
+
 import "./styles.css";
 interface Repository {
   id: string;
@@ -85,46 +94,62 @@ const Repos: React.FC = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="Search"
-          placeholder="検索"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button type="submit">検索</button>
-      </form>
-      <button className={isOpen ? "show" : "d-none"} onClick={toggleButton}>
-        show more
-      </button>
-      <div className={isClicked ? "d-none" : "show"}>
-        {repositories.map((repository, index) => (
-          <li key={`${repository.id}-${index}`}>
-            <Link to="/issues" state={{ repo_ids: repository.id }}>
-              {repository.name}
-            </Link>
-          </li>
-        ))}
-      </div>
-
-      <div className={isClicked ? "show" : "d-none"}>
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={loadMore}
-          hasMore={hasMoreItems}
-          loader={<div key={0}>Loading...</div>}
-          useWindow={true}
-        >
-          {repositories.map((repository, index) => (
-            <li key={`${repository.id}-${index}`}>
-              <Link to="/issues" state={{ repo_ids: repository.id }}>
-                {repository.name}
-              </Link>
-            </li>
-          ))}
-        </InfiniteScroll>
-      </div>
+      <Container>
+        <Paper sx={{ padding: 4, marginY: 2 }}>
+          <form onSubmit={handleSubmit}>
+            <Box>
+              <TextField
+                size="small"
+                label="Repository Name"
+                type="text"
+                className="Search"
+                placeholder="検索"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <Button variant="outlined" type="submit">
+                検索
+              </Button>
+            </Box>
+          </form>
+          <div className={isClicked ? "d-none" : "show"}>
+            <List>
+              {repositories.map((repository, index) => (
+                <ListItem key={`${repository.id}-${index}`} divider>
+                  <Link to="/issues" state={{ repo_ids: repository.id }}>
+                    <ListItemText>{repository.name}</ListItemText>
+                  </Link>
+                </ListItem>
+              ))}
+              <button
+                className={isOpen ? "show showmore" : "d-none showmore"}
+                onClick={toggleButton}
+              >
+                show more
+              </button>
+            </List>
+          </div>
+          <div className={isClicked ? "show" : "d-none"}>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={loadMore}
+              hasMore={hasMoreItems}
+              loader={<div key={0}>Loading...</div>}
+              useWindow={true}
+            >
+              <List>
+                {repositories.map((repository, index) => (
+                  <ListItem key={`${repository.id}-${index}`} divider>
+                    <Link to="/issues" state={{ repo_ids: repository.id }}>
+                      <ListItemText>{repository.name}</ListItemText>
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </InfiniteScroll>
+          </div>{" "}
+        </Paper>
+      </Container>
     </div>
   );
 };
