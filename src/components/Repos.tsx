@@ -24,6 +24,7 @@ const Repos: React.FC = () => {
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const getRepositories = async () => {
     try {
@@ -74,8 +75,11 @@ const Repos: React.FC = () => {
     setRepositories([]);
     setEndCursor(null);
     getRepositories();
+    setIsOpen(!isOpen);
   };
-  const classToggle = () => {
+
+  const toggleButton = () => {
+    setIsOpen(!isOpen);
     setIsClicked(!isClicked);
   };
 
@@ -91,7 +95,7 @@ const Repos: React.FC = () => {
         />
         <button type="submit">検索</button>
       </form>
-      <button className={isClicked ? "d-none" : "show"} onClick={classToggle}>
+      <button className={isOpen ? "show" : "d-none"} onClick={toggleButton}>
         show more
       </button>
       <div className={isClicked ? "d-none" : "show"}>
