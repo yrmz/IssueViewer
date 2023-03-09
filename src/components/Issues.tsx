@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 interface Issue {
   title: string;
@@ -61,6 +61,7 @@ const Issues: React.FC = () => {
 
   return (
     <div>
+      <Link to="/">Return to Top</Link>
       <h2>{repository?.name} Issues:</h2>
       <ul>
         {repository?.issues.edges.map((issue) => (

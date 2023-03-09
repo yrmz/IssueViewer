@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
-
+import "./styles.css";
 interface Repository {
   id: string;
   name: string;
@@ -23,6 +23,7 @@ const Repos: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const getRepositories = async () => {
     try {
@@ -31,7 +32,7 @@ const Repos: React.FC = () => {
         {
           query: `
           query ($query: String!, $cursor: String) {
-            search(query: $query, type: REPOSITORY, first: 50, after: $cursor) {
+            search(query: $query, type: REPOSITORY, first: 15, after: $cursor) {
               pageInfo {
                 endCursor
                 hasNextPage
@@ -74,6 +75,9 @@ const Repos: React.FC = () => {
     setEndCursor(null);
     getRepositories();
   };
+  const classToggle = () => {
+    setIsClicked(!isClicked);
+  };
 
   return (
     <div>
@@ -87,7 +91,20 @@ const Repos: React.FC = () => {
         />
         <button type="submit">検索</button>
       </form>
-      <div>
+      <button className={isClicked ? "d-none" : "show"} onClick={classToggle}>
+        show more
+      </button>
+      <div className={isClicked ? "d-none" : "show"}>
+        {repositories.map((repository, index) => (
+          <li key={`${repository.id}-${index}`}>
+            <Link to="/issues" state={{ repo_ids: repository.id }}>
+              {repository.name}
+            </Link>
+          </li>
+        ))}
+      </div>
+
+      <div className={isClicked ? "show" : "d-none"}>
         <InfiniteScroll
           pageStart={0}
           loadMore={loadMore}
