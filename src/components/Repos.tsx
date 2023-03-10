@@ -15,16 +15,6 @@ interface Repository {
   name: string;
 }
 
-interface SearchResponse {
-  search: {
-    pageInfo: {
-      endCursor: string;
-      hasNextPage: boolean;
-    };
-    nodes: Repository[];
-  };
-}
-
 const Repos: React.FC = () => {
   const [query, setQuery] = useState<string>("");
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -163,7 +153,7 @@ const Repos: React.FC = () => {
                 ))}
               </List>
             </InfiniteScroll>
-          </div>{" "}
+          </div>
         </Paper>
       </Container>
     </div>
