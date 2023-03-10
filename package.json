@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@types/react-infinite-scroller": "^1.2.3",
-    "@types/serviceworker": "^0.0.63"
+    "@types/serviceworker": "^0.0.63",
+    "@types/styled-components": "^5.1.26"
   }
 }

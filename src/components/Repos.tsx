@@ -116,7 +116,15 @@ const Repos: React.FC = () => {
             <List>
               {repositories.map((repository, index) => (
                 <ListItem key={`${repository.id}-${index}`} divider>
-                  <Link to="/issues" state={{ repo_ids: repository.id }}>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "#000",
+                      fontWeight: "bold",
+                    }}
+                    to="/issues"
+                    state={{ repo_ids: repository.id }}
+                  >
                     <ListItemText>{repository.name}</ListItemText>
                   </Link>
                 </ListItem>
@@ -140,7 +148,15 @@ const Repos: React.FC = () => {
               <List>
                 {repositories.map((repository, index) => (
                   <ListItem key={`${repository.id}-${index}`} divider>
-                    <Link to="/issues" state={{ repo_ids: repository.id }}>
+                    <Link
+                      style={{
+                        textDecoration: "none",
+                        color: "#000",
+                        fontWeight: "bold",
+                      }}
+                      to="/issues"
+                      state={{ repo_ids: repository.id }}
+                    >
                       <ListItemText>{repository.name}</ListItemText>
                     </Link>
                   </ListItem>

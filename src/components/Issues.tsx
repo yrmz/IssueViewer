@@ -70,7 +70,9 @@ const Issues: React.FC = () => {
       <Container>
         <Paper sx={{ padding: 4, marginY: 5 }}>
           <Button variant="outlined">
-            <Link to="/">Return to Top</Link>
+            <Link style={{ textDecoration: "none", color: "#000" }} to="/">
+              Return to Top
+            </Link>
           </Button>
           <h2>{repository?.name} Issues:</h2>
           <Box>

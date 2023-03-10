@@ -3,6 +3,8 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const Header: React.FC = () => {
   return (
@@ -11,7 +13,9 @@ const Header: React.FC = () => {
       <AppBar>
         <Toolbar>
           <Typography variant="h6" component="div">
-            Issue Viewer
+            <Link style={{ textDecoration: "none", color: "#fff" }} to="/">
+              Issue Viewer
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -21,3 +25,7 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
+const StyledLink = styled.a`
+  text-decoration: none;
+`;
