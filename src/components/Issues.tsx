@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Header from "./Header";
 import axios from "axios";
 import { useLocation, Link } from "react-router-dom";
+import { Paper, Container, Box, Button } from "@mui/material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 
 interface Issue {
   title: string;
@@ -61,13 +66,25 @@ const Issues: React.FC = () => {
 
   return (
     <div>
-      <Link to="/">Return to Top</Link>
-      <h2>{repository?.name} Issues:</h2>
-      <ul>
-        {repository?.issues.edges.map((issue) => (
-          <li key={issue.node.title}>{issue.node.title}</li>
-        ))}
-      </ul>
+      <Header />
+      <Container>
+        <Paper sx={{ padding: 4, marginY: 5 }}>
+          <Button variant="outlined">
+            <Link to="/">Return to Top</Link>
+          </Button>
+          <h2>{repository?.name} Issues:</h2>
+          <Box>
+            <List>
+              {repository?.issues.edges.map((issue) => (
+                <ListItem key={issue.node.title} divider>
+                  <ListItemText>{issue.node.title}</ListItemText>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Paper>
+      </Container>
+      <ul></ul>
     </div>
   );
 };

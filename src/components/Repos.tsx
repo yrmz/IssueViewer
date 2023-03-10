@@ -1,15 +1,13 @@
 import React, { useState } from "react";
+import Header from "./Header";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Paper, Container, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { Paper } from "@mui/material";
-import { Container } from "@mui/material";
-import { Box } from "@mui/material";
 
 import "./styles.css";
 interface Repository {
@@ -95,7 +93,8 @@ const Repos: React.FC = () => {
   return (
     <div>
       <Container>
-        <Paper sx={{ padding: 4, marginY: 2 }}>
+        <Header />
+        <Paper sx={{ padding: 4, marginY: 5 }}>
           <form onSubmit={handleSubmit}>
             <Box>
               <TextField
@@ -106,9 +105,10 @@ const Repos: React.FC = () => {
                 placeholder="検索"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                sx={{ marginRight: 3 }}
               />
               <Button variant="outlined" type="submit">
-                検索
+                Search
               </Button>
             </Box>
           </form>
