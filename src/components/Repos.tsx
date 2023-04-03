@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { GET_REPOSITORIES } from "./queries";
 
 import "./styles.css";
 interface Repository {
@@ -28,24 +29,6 @@ const Repos: React.FC = () => {
     },
     cache: new InMemoryCache(),
   });
-  const GET_REPOSITORIES = gql`
-    query SearchRepositories($query: String!, $cursor: String) {
-      search(query: $query, type: REPOSITORY, first: 15, after: $cursor) {
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        edges {
-          node {
-            ... on Repository {
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-  `;
   const getRepositories = async () => {
     try {
       const response = await client.query({
