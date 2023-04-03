@@ -20,8 +20,6 @@ const Repos: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const getRepositories = async () => {
     try {
@@ -72,14 +70,7 @@ const Repos: React.FC = () => {
     setRepositories([]);
     setEndCursor(null);
     getRepositories();
-    setIsOpen(!isOpen);
   };
-
-  const toggleButton = () => {
-    setIsOpen(!isOpen);
-    setIsClicked(!isClicked);
-  };
-  
 
   return (
     <div>
@@ -103,7 +94,12 @@ const Repos: React.FC = () => {
               </Button>
             </Box>
           </form>
-          <div className={isClicked ? "d-none" : "show"}>
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={loadMore}
+            hasMore={hasMoreItems}
+            loader={<div key={0}>Loading...</div>}
+            useWindow={true}>
             <List>
               {repositories.map((repository, index) => (
                 <ListItem key={`${repository.id}-${index}`} divider>
@@ -114,47 +110,13 @@ const Repos: React.FC = () => {
                       fontWeight: "bold",
                     }}
                     to="/issues"
-                    state={{ repo_ids: repository.id }}
-                  >
+                    state={{ repo_ids: repository.id }}>
                     <ListItemText>{repository.name}</ListItemText>
                   </Link>
                 </ListItem>
               ))}
-              <button
-                className={isOpen ? "show showmore" : "d-none showmore"}
-                onClick={toggleButton}
-              >
-                show more
-              </button>
             </List>
-          </div>
-          <div className={isClicked ? "show" : "d-none"}>
-            <InfiniteScroll
-              pageStart={0}
-              loadMore={loadMore}
-              hasMore={hasMoreItems}
-              loader={<div key={0}>Loading...</div>}
-              useWindow={true}
-            >
-              <List>
-                {repositories.map((repository, index) => (
-                  <ListItem key={`${repository.id}-${index}`} divider>
-                    <Link
-                      style={{
-                        textDecoration: "none",
-                        color: "#000",
-                        fontWeight: "bold",
-                      }}
-                      to="/issues"
-                      state={{ repo_ids: repository.id }}
-                    >
-                      <ListItemText>{repository.name}</ListItemText>
-                    </Link>
-                  </ListItem>
-                ))}
-              </List>
-            </InfiniteScroll>
-          </div>
+          </InfiniteScroll>
         </Paper>
       </Container>
     </div>
