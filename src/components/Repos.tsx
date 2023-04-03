@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Header from "./Header";
-import axios from "axios";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import { Button, Paper, Container, Box } from "@mui/material";
@@ -21,39 +21,44 @@ const Repos: React.FC = () => {
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
 
+  const client = new ApolloClient({
+    uri: "https://api.github.com/graphql",
+    headers: {
+      Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_KEY}`,
+    },
+    cache: new InMemoryCache(),
+  });
+  const GET_REPOSITORIES = gql`
+    query SearchRepositories($query: String!, $cursor: String) {
+      search(query: $query, type: REPOSITORY, first: 15, after: $cursor) {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          node {
+            ... on Repository {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  `;
   const getRepositories = async () => {
     try {
-      const response = await axios.post(
-        "https://api.github.com/graphql",
-        {
-          query: `
-          query ($query: String!, $cursor: String) {
-            search(query: $query, type: REPOSITORY, first: 15, after: $cursor) {
-              pageInfo {
-                endCursor
-                hasNextPage
-              }
-              nodes {
-                ... on Repository {
-                  id
-                  name
-                }
-              }
-            }
-          }`,
-          variables: {
-            query,
-            cursor: endCursor,
-          },
+      const response = await client.query({
+        query: GET_REPOSITORIES,
+        variables: {
+          query,
+          cursor: endCursor,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_KEY}`,
-          },
-        }
-      );
+      });
 
-      const newRepositories = response.data.data.search.nodes;
+      const newRepositories = response.data.search.edges.map(
+        (edge: any) => edge.node
+      );
       setRepositories([...repositories, ...newRepositories]);
       setHasMoreItems(response.data.data.search.pageInfo.hasNextPage);
       setEndCursor(response.data.data.search.pageInfo.endCursor);
@@ -96,10 +101,11 @@ const Repos: React.FC = () => {
           </form>
           <InfiniteScroll
             pageStart={0}
+            initialLoad={false}
             loadMore={loadMore}
             hasMore={hasMoreItems}
-            loader={<div key={0}>Loading...</div>}
-            useWindow={true}>
+            useWindow={true}
+            threshold={100}>
             <List>
               {repositories.map((repository, index) => (
                 <ListItem key={`${repository.id}-${index}`} divider>
