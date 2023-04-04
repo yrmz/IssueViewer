@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Header from "./Header";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import { Button, Paper, Container, Box } from "@mui/material";
