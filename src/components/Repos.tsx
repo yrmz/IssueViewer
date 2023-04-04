@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import Header from "./Header";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroller";
-import { Link } from "react-router-dom";
 import { Button, Paper, Container, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { GET_REPOSITORIES } from "./queries";
-import { createContext } from "react";
 import { getRepositories } from "./getQueries";
+import RepositoryList from "./List";
 
 import "./styles.css";
 interface Repository {
@@ -18,11 +12,18 @@ interface Repository {
   name: string;
 }
 
+export type ContextType = Repository[];
+export const Context = createContext<ContextType>([]); //ここで初期化
+
 const Repos: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const [query, setQuery] = useState<string>("");
+
+  const [state, setState] = useState(
+    "私はContextです。propsで渡してもらっていません。"
+  );
 
   const loadMore = () => {
     getRepositories(
@@ -77,22 +78,7 @@ const Repos: React.FC = () => {
             hasMore={hasMoreItems}
             useWindow={true}
             threshold={100}>
-            <List>
-              {repositories.map((repository, index) => (
-                <ListItem key={`${repository.id}-${index}`} divider>
-                  <Link
-                    style={{
-                      textDecoration: "none",
-                      color: "#000",
-                      fontWeight: "bold",
-                    }}
-                    to="/issues"
-                    state={{ repo_ids: repository.id }}>
-                    <ListItemText>{repository.name}</ListItemText>
-                  </Link>
-                </ListItem>
-              ))}
-            </List>
+            <RepositoryList repositories={repositories} />
           </InfiniteScroll>
         </Paper>
       </Container>
