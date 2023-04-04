@@ -9,6 +9,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { GET_REPOSITORIES } from "./queries";
+import { createContext } from "react";
+import { getRepositories } from "./getQueries";
 
 import "./styles.css";
 interface Repository {
@@ -17,47 +19,33 @@ interface Repository {
 }
 
 const Repos: React.FC = () => {
-  const [query, setQuery] = useState<string>("");
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
-
-  const client = new ApolloClient({
-    uri: "https://api.github.com/graphql",
-    headers: {
-      Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_KEY}`,
-    },
-    cache: new InMemoryCache(),
-  });
-  const getRepositories = async () => {
-    try {
-      const response = await client.query({
-        query: GET_REPOSITORIES,
-        variables: {
-          query,
-          cursor: endCursor,
-        },
-      });
-
-      const newRepositories = response.data.search.edges.map(
-        (edge: any) => edge.node
-      );
-      setRepositories([...repositories, ...newRepositories]);
-      setHasMoreItems(response.data.data.search.pageInfo.hasNextPage);
-      setEndCursor(response.data.data.search.pageInfo.endCursor);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [query, setQuery] = useState<string>("");
 
   const loadMore = () => {
-    getRepositories();
+    getRepositories(
+      query,
+      endCursor,
+      repositories,
+      setRepositories,
+      setHasMoreItems,
+      setEndCursor
+    );
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setRepositories([]);
     setEndCursor(null);
-    getRepositories();
+    getRepositories(
+      query,
+      endCursor,
+      repositories,
+      setRepositories,
+      setHasMoreItems,
+      setEndCursor
+    );
   };
 
   return (
