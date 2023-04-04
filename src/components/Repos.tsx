@@ -5,6 +5,7 @@ import { Button, Paper, Container, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { getRepositories } from "./getQueries";
 import RepositoryList from "./List";
+import SearchForm from "./SearchForm";
 
 import "./styles.css";
 interface Repository {
@@ -19,26 +20,23 @@ const Repos: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<any>("");
 
-  const [state, setState] = useState(
-    "私はContextです。propsで渡してもらっていません。"
-  );
-
-  const loadMore = () => {
-    getRepositories(
-      query,
-      endCursor,
-      repositories,
-      setRepositories,
-      setHasMoreItems,
-      setEndCursor
-    );
+  const handleChangeRpositories = (newRepositories: Repository[]) => {
+    setRepositories(newRepositories);
   };
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setRepositories([]);
-    setEndCursor(null);
+  const handleChangeCursor = (newEndCursor: string | null) => {
+    setEndCursor(newEndCursor);
+  };
+
+  const handleChangeHasMoreItems = (newHasMoreItems: boolean) => {
+    setHasMoreItems(newHasMoreItems);
+  };
+
+  const handleSetQuery = (newQuery: any) => {
+    setQuery(newQuery);
+  };
+  const loadMore = () => {
     getRepositories(
       query,
       endCursor,
@@ -54,23 +52,18 @@ const Repos: React.FC = () => {
       <Container>
         <Header />
         <Paper sx={{ padding: 4, marginY: 5 }}>
-          <form onSubmit={handleSubmit}>
-            <Box>
-              <TextField
-                size="small"
-                label="Repository Name"
-                type="text"
-                className="Search"
-                placeholder="検索"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                sx={{ marginRight: 3 }}
-              />
-              <Button variant="outlined" type="submit">
-                Search
-              </Button>
-            </Box>
-          </form>
+          <SearchForm
+            setRepositories={handleChangeRpositories}
+            setEndCursor={handleChangeCursor}
+            setHasMoreItems={handleChangeHasMoreItems}
+            setQuery={handleSetQuery}
+            getRepositories={{
+              getRepositories: getRepositories,
+              query: query,
+              endCursor: endCursor,
+              repositories: repositories,
+            }}
+          />
           <InfiniteScroll
             pageStart={0}
             initialLoad={false}
