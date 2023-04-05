@@ -12,6 +12,7 @@ const SearchForm = (props: any) => {
     endCursor,
     repositories,
   } = props;
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setRepositories([]);

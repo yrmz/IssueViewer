@@ -53,6 +53,7 @@ const Repos: React.FC = () => {
         <Header />
         <Paper sx={{ padding: 4, marginY: 5 }}>
           <SearchForm
+            query={query}
             setRepositories={handleChangeRpositories}
             setEndCursor={handleChangeCursor}
             setHasMoreItems={handleChangeHasMoreItems}
@@ -70,7 +71,8 @@ const Repos: React.FC = () => {
             loadMore={loadMore}
             hasMore={hasMoreItems}
             useWindow={true}
-            threshold={100}>
+            threshold={100}
+          >
             <RepositoryList repositories={repositories} />
           </InfiniteScroll>
         </Paper>

@@ -9,7 +9,7 @@ interface Repository {
 export const getRepositories = async (
   query: string,
   cursor: string | null,
-  repositories: Repository[],
+  repositories: Repository[] | undefined,
   setRepositories: React.Dispatch<React.SetStateAction<Repository[]>>,
   setHasMoreItems: React.Dispatch<React.SetStateAction<boolean>>,
   setEndCursor: React.Dispatch<React.SetStateAction<string | null>>
@@ -34,7 +34,13 @@ export const getRepositories = async (
     const newRepositories = response.data.search.edges.map(
       (edge: any) => edge.node
     );
-    setRepositories([...repositories, ...newRepositories]);
+
+    // repositories 引数が undefined の場合は空の配列を作成する
+    const updatedRepositories = repositories
+      ? [...repositories, ...newRepositories]
+      : newRepositories;
+
+    setRepositories(updatedRepositories);
     setHasMoreItems(response.data.search.pageInfo.hasNextPage);
     setEndCursor(response.data.search.pageInfo.endCursor);
   } catch (error) {
