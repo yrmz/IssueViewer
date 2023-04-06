@@ -19,20 +19,21 @@ const Repos: React.FC = () => {
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const [query, setQuery] = useState<any>("");
 
-  const handleChangeRpositories = (newRepositories: Repository[]) => {
-    setRepositories(newRepositories);
-  };
-  const handleChangeCursor = (newEndCursor: string | null) => {
-    setEndCursor(newEndCursor);
+  const eventHandlers = {
+    repositories(newRepositories: Repository[]) {
+      setRepositories(newRepositories);
+    },
+    endCursor(newEndCursor: string | null) {
+      setEndCursor(newEndCursor);
+    },
+    hasMoreItems(newHasMoreItems: boolean) {
+      setHasMoreItems(newHasMoreItems);
+    },
+    setQuery(newQuery: any) {
+      setQuery(newQuery);
+    },
   };
 
-  const handleChangeHasMoreItems = (newHasMoreItems: boolean) => {
-    setHasMoreItems(newHasMoreItems);
-  };
-
-  const handleSetQuery = (newQuery: any) => {
-    setQuery(newQuery);
-  };
   const loadMore = () => {
     getRepositories(
       query,
@@ -54,10 +55,10 @@ const Repos: React.FC = () => {
               query: query,
               endCursor: endCursor,
               repositories: repositories,
-              setRepositories: handleChangeRpositories,
-              setEndCursor: handleChangeCursor,
-              setHasMoreItems: handleChangeHasMoreItems,
-              setQuery: handleSetQuery,
+              setRepositories: eventHandlers.repositories,
+              setEndCursor: eventHandlers.endCursor,
+              setHasMoreItems: eventHandlers.hasMoreItems,
+              setQuery: eventHandlers.setQuery,
             }}>
             <SearchForm
               getRepositories={{
