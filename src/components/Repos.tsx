@@ -1,20 +1,17 @@
 import React, { useState, createContext } from "react";
 import Header from "./Header";
 import InfiniteScroll from "react-infinite-scroller";
-import { Button, Paper, Container, Box } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { Paper, Container } from "@mui/material";
 import { getRepositories } from "./getQueries";
 import RepositoryList from "./List";
 import SearchForm from "./SearchForm";
+import { QueryContext, getRepositoriesContext } from "../contexts";
 
 import "./styles.css";
 interface Repository {
   id: string;
   name: string;
 }
-
-export type ContextType = Repository[];
-export const Context = createContext<ContextType>([]); //ここで初期化
 
 const Repos: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -52,27 +49,31 @@ const Repos: React.FC = () => {
       <Container>
         <Header />
         <Paper sx={{ padding: 4, marginY: 5 }}>
-          <SearchForm
-            query={query}
-            setRepositories={handleChangeRpositories}
-            setEndCursor={handleChangeCursor}
-            setHasMoreItems={handleChangeHasMoreItems}
-            setQuery={handleSetQuery}
-            getRepositories={{
-              getRepositories: getRepositories,
-              query: query,
-              endCursor: endCursor,
-              repositories: repositories,
-            }}
-          />
+          <QueryContext.Provider value={query}>
+            <getRepositoriesContext.Provider
+              value={{
+                query: query,
+                endCursor: endCursor,
+                repositories: repositories,
+              }}>
+              <SearchForm
+                setRepositories={handleChangeRpositories}
+                setEndCursor={handleChangeCursor}
+                setHasMoreItems={handleChangeHasMoreItems}
+                setQuery={handleSetQuery}
+                getRepositories={{
+                  getRepositories: getRepositories,
+                }}
+              />
+            </getRepositoriesContext.Provider>
+          </QueryContext.Provider>
           <InfiniteScroll
             pageStart={0}
             initialLoad={false}
             loadMore={loadMore}
             hasMore={hasMoreItems}
             useWindow={true}
-            threshold={100}
-          >
+            threshold={100}>
             <RepositoryList repositories={repositories} />
           </InfiniteScroll>
         </Paper>
