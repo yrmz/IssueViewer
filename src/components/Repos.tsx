@@ -5,9 +5,13 @@ import { Paper, Container } from "@mui/material";
 import { getRepositories } from "./getQueries";
 import RepositoryList from "./List";
 import SearchForm from "./SearchForm";
-import { QueryContext, getRepositoriesContext } from "../contexts";
-
+import {
+  QueryContext,
+  getRepositoriesContext,
+  searchFormContext,
+} from "../contexts";
 import "./styles.css";
+
 interface Repository {
   id: string;
   name: string;
@@ -56,15 +60,19 @@ const Repos: React.FC = () => {
                 endCursor: endCursor,
                 repositories: repositories,
               }}>
-              <SearchForm
-                setRepositories={handleChangeRpositories}
-                setEndCursor={handleChangeCursor}
-                setHasMoreItems={handleChangeHasMoreItems}
-                setQuery={handleSetQuery}
-                getRepositories={{
-                  getRepositories: getRepositories,
-                }}
-              />
+              <searchFormContext.Provider
+                value={{
+                  setRepositories: handleChangeRpositories,
+                  setEndCursor: handleChangeCursor,
+                  setHasMoreItems: handleChangeHasMoreItems,
+                  setQuery: handleSetQuery,
+                }}>
+                <SearchForm
+                  getRepositories={{
+                    getRepositories: getRepositories,
+                  }}
+                />
+              </searchFormContext.Provider>
             </getRepositoriesContext.Provider>
           </QueryContext.Provider>
           <InfiniteScroll

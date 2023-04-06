@@ -10,9 +10,9 @@ export const getRepositories = async (
   query: string,
   cursor: string | null,
   repositories: Repository[] | undefined,
-  setRepositories: React.Dispatch<React.SetStateAction<Repository[]>>,
-  setHasMoreItems: React.Dispatch<React.SetStateAction<boolean>>,
-  setEndCursor: React.Dispatch<React.SetStateAction<string | null>>
+  setRepositories: (repositories: Repository[]) => void,
+  setHasMoreItems: (hasMoreItems: boolean) => void,
+  setEndCursor: (endCursor: string | null) => void
 ) => {
   const client = new ApolloClient({
     uri: "https://api.github.com/graphql",
