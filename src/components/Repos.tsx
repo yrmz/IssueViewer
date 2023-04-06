@@ -6,12 +6,8 @@ import { getRepositories } from "./getQueries";
 import RepositoryList from "./List";
 import SearchForm from "./SearchForm";
 import { searchFormContext } from "../contexts";
+import { Repository } from "./types";
 import "./styles.css";
-
-interface Repository {
-  id: string;
-  name: string;
-}
 
 const Repos: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);

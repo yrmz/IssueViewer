@@ -6,29 +6,12 @@ import { Paper, Container, Box, Button } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-
-interface Issue {
-  title: string;
-}
-
-interface Repository {
-  id: string;
-  name: string;
-  issues: {
-    edges: {
-      node: Issue;
-    }[];
-  };
-}
-
-interface State {
-  repo_ids: string;
-}
+import { IssueValues, State } from "./types";
 
 const Issues: React.FC = () => {
   const location = useLocation();
   const { repo_ids } = location.state as State;
-  const [repository, setRepository] = useState<Repository>();
+  const [repository, setRepository] = useState<IssueValues>();
 
   useEffect(() => {
     const getIssues = async () => {
@@ -57,7 +40,7 @@ const Issues: React.FC = () => {
         },
       });
 
-      const repo = response.data.data.nodes[0] as Repository;
+      const repo = response.data.data.nodes[0] as IssueValues;
       setRepository(repo);
     };
 
