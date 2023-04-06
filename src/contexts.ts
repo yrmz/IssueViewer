@@ -4,11 +4,6 @@ interface Repository {
   id: string;
   name: string;
 }
-type getRepositoriesValue = {
-  query: string | null;
-  endCursor: string | null;
-  repositories: Repository[];
-};
 type SearchForm = {
   query: string;
   endCursor: string | null;
@@ -19,12 +14,6 @@ type SearchForm = {
   setQuery: (query: any) => void;
 };
 
-export const QueryContext = createContext("");
-export const getRepositoriesContext = createContext<getRepositoriesValue>({
-  query: "",
-  endCursor: "",
-  repositories: [],
-});
 export const searchFormContext = createContext<SearchForm>({
   query: "",
   endCursor: "",
