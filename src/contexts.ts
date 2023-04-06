@@ -10,6 +10,9 @@ type getRepositoriesValue = {
   repositories: Repository[];
 };
 type SearchForm = {
+  query: string;
+  endCursor: string | null;
+  repositories: Repository[];
   setRepositories: (repositories: Repository[]) => void;
   setEndCursor: (endCursor: string | null) => void;
   setHasMoreItems: (hasMoreItems: boolean) => void;
@@ -23,6 +26,9 @@ export const getRepositoriesContext = createContext<getRepositoriesValue>({
   repositories: [],
 });
 export const searchFormContext = createContext<SearchForm>({
+  query: "",
+  endCursor: "",
+  repositories: [],
   setRepositories: () => {},
   setEndCursor: () => {},
   setHasMoreItems: () => {},

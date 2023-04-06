@@ -1,17 +1,17 @@
 import { Button, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { getRepositories } from "./getQueries";
-import { QueryContext, searchFormContext } from "../contexts";
+import { searchFormContext } from "../contexts";
 import { useContext } from "react";
 
 const SearchForm = (props: any) => {
-  const { setRepositories } = useContext(searchFormContext);
-  const { setEndCursor } = useContext(searchFormContext);
-  const { setQuery } = useContext(searchFormContext);
-  const { setHasMoreItems } = useContext(searchFormContext);
+  const { setRepositories, setEndCursor, setQuery, setHasMoreItems } =
+    useContext(searchFormContext);
+  const params = useContext(searchFormContext);
+  const query = params.query;
+  const endCursor = params.endCursor;
+  const repositories = params.repositories;
 
-  const { endCursor, repositories } = props;
-  const query = useContext(QueryContext);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setRepositories([]);
