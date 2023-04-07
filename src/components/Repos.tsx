@@ -42,22 +42,19 @@ const Repos: React.FC = () => {
               setQuery,
             }}
           >
-            <SearchForm
-              getRepositories={{
-                getRepositories: getRepositories,
-              }}
-            />
+            <SearchForm />
+
+            <InfiniteScroll
+              pageStart={0}
+              initialLoad={false}
+              loadMore={loadMore}
+              hasMore={hasMoreItems}
+              useWindow={true}
+              threshold={100}
+            >
+              <RepositoryList repositories={repositories} />
+            </InfiniteScroll>
           </searchFormContext.Provider>
-          <InfiniteScroll
-            pageStart={0}
-            initialLoad={false}
-            loadMore={loadMore}
-            hasMore={hasMoreItems}
-            useWindow={true}
-            threshold={100}
-          >
-            <RepositoryList repositories={repositories} />
-          </InfiniteScroll>
         </Paper>
       </Container>
     </div>
