@@ -5,7 +5,7 @@ import { Paper, Container } from "@mui/material";
 import { getRepositories } from "./getQueries";
 import RepositoryList from "./List";
 import SearchForm from "./SearchForm";
-import { searchFormContext } from "../contexts";
+import { searchFormContext, InfiniteScrollContent } from "../contexts";
 import { Repository } from "./types";
 import "./styles.css";
 
@@ -43,15 +43,26 @@ const Repos: React.FC = () => {
             }}
           >
             <SearchForm />
-
-            <InfiniteScroll
-              pageStart={0}
-              initialLoad={false}
-              loadMore={loadMore}
-              hasMore={hasMoreItems}
-              useWindow={true}
-              threshold={100}
-            >
+            <InfiniteScrollContent.Provider
+              value={{
+                pageStart: 0,
+                initialLoad: false,
+                loadMore: () => {
+                  getRepositories(
+                    query,
+                    endCursor,
+                    repositories,
+                    setRepositories,
+                    setHasMoreItems,
+                    setEndCursor
+                  );
+                },
+                hasMore: false,
+                useWindow: true,
+                threshold: 0,
+              }}
+            ></InfiniteScrollContent.Provider>
+            <InfiniteScroll loadMore={loadMore}>
               <RepositoryList repositories={repositories} />
             </InfiniteScroll>
           </searchFormContext.Provider>

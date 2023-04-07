@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { SearchForm } from "./components/types";
+import { SearchForm, InfiniteScrollValues } from "./components/types";
 
 export const searchFormContext = createContext<SearchForm>({
   query: "",
@@ -9,4 +9,13 @@ export const searchFormContext = createContext<SearchForm>({
   setEndCursor: () => {},
   setHasMoreItems: () => {},
   setQuery: () => {},
+});
+
+export const InfiniteScrollContent = createContext<InfiniteScrollValues>({
+  pageStart: 0,
+  initialLoad: false,
+  loadMore: () => {},
+  hasMore: false,
+  useWindow: true,
+  threshold: 0,
 });
