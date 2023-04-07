@@ -5,12 +5,8 @@ import { searchFormContext } from "../contexts";
 import { useContext } from "react";
 
 const SearchForm = (props: any) => {
-  const { setRepositories, setEndCursor, setQuery, setHasMoreItems } =
+  const { setRepositories, setEndCursor, setHasMoreItems, query, setQuery } =
     useContext(searchFormContext);
-  const params = useContext(searchFormContext);
-  const query = params.query;
-  const endCursor = params.endCursor;
-  const repositories = params.repositories;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -18,13 +14,14 @@ const SearchForm = (props: any) => {
     setEndCursor(null);
     getRepositories(
       query,
-      endCursor,
-      repositories,
+      null,
+      [],
       setRepositories,
       setHasMoreItems,
       setEndCursor
     );
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <Box>
