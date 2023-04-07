@@ -15,21 +15,6 @@ const Repos: React.FC = () => {
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const [query, setQuery] = useState<any>("");
 
-  const eventHandlers = {
-    repositories(newRepositories: Repository[]) {
-      setRepositories(newRepositories);
-    },
-    endCursor(newEndCursor: string | null) {
-      setEndCursor(newEndCursor);
-    },
-    hasMoreItems(newHasMoreItems: boolean) {
-      setHasMoreItems(newHasMoreItems);
-    },
-    setQuery(newQuery: any) {
-      setQuery(newQuery);
-    },
-  };
-
   const loadMore = () => {
     getRepositories(
       query,
@@ -48,14 +33,15 @@ const Repos: React.FC = () => {
         <Paper sx={{ padding: 4, marginY: 5 }}>
           <searchFormContext.Provider
             value={{
-              query: query,
-              endCursor: endCursor,
-              repositories: repositories,
-              setRepositories: eventHandlers.repositories,
-              setEndCursor: eventHandlers.endCursor,
-              setHasMoreItems: eventHandlers.hasMoreItems,
-              setQuery: eventHandlers.setQuery,
-            }}>
+              query,
+              endCursor,
+              repositories,
+              setRepositories,
+              setEndCursor,
+              setHasMoreItems,
+              setQuery,
+            }}
+          >
             <SearchForm
               getRepositories={{
                 getRepositories: getRepositories,
@@ -68,7 +54,8 @@ const Repos: React.FC = () => {
             loadMore={loadMore}
             hasMore={hasMoreItems}
             useWindow={true}
-            threshold={100}>
+            threshold={100}
+          >
             <RepositoryList repositories={repositories} />
           </InfiniteScroll>
         </Paper>
