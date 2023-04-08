@@ -4,7 +4,7 @@ import { getRepositories } from "./getQueries";
 import { searchFormContext } from "../contexts";
 import { useContext } from "react";
 
-const SearchForm = (props: any) => {
+const SearchForm = () => {
   const { setRepositories, setEndCursor, setHasMoreItems, query, setQuery } =
     useContext(searchFormContext);
 
