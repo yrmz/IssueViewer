@@ -1,41 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import axios from "axios";
 import { useLocation, Link } from "react-router-dom";
 import { Paper, Container, Box, Button } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { IssueValues, State } from "./types";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { GET_REPOSITORY_ISSUES } from "./queries";
+import { getIssues } from "./getQueries";
 
 const Issues: React.FC = () => {
   const location = useLocation();
   const { repo_ids } = location.state as State;
-  const [repository, setRepository] = useState<IssueValues>();
+  const [issues, setIssues] = useState<IssueValues>();
 
   useEffect(() => {
-    const getIssues = async () => {
-      const client = new ApolloClient({
-        uri: "https://api.github.com/graphql",
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_KEY}`,
-        },
-        cache: new InMemoryCache(),
-      });
-      const response = await client.query({
-        query: GET_REPOSITORY_ISSUES,
-        variables: {
-          repo_ids,
-        },
-      });
-
-      const repo = response.data.nodes[0] as IssueValues;
-      setRepository(repo);
-    };
-
-    getIssues();
+    getIssues(repo_ids, setIssues);
   }, [repo_ids]);
 
   return (
@@ -48,10 +27,10 @@ const Issues: React.FC = () => {
               Return to Top
             </Link>
           </Button>
-          <h2>{repository?.name} Issues:</h2>
+          <h2>{issues?.name} Issues:</h2>
           <Box>
             <List>
-              {repository?.issues.edges.map((issue) => (
+              {issues?.issues.edges.map((issue) => (
                 <ListItem key={issue.node.title} divider>
                   <ListItemText>{issue.node.title}</ListItemText>
                 </ListItem>

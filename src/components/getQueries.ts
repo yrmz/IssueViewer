@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { GET_REPOSITORIES } from "./queries";
+import { GET_REPOSITORIES, GET_REPOSITORY_ISSUES } from "./queries";
+import { IssueValues } from "./types";
 
 interface Repository {
   id: string;
@@ -46,4 +47,26 @@ export const getRepositories = async (
   } catch (error) {
     console.error(error);
   }
+};
+
+export const getIssues = async (
+  repo_ids: string,
+  setIssues: (issues: IssueValues) => void
+) => {
+  const client = new ApolloClient({
+    uri: "https://api.github.com/graphql",
+    headers: {
+      Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_KEY}`,
+    },
+    cache: new InMemoryCache(),
+  });
+  const response = await client.query({
+    query: GET_REPOSITORY_ISSUES,
+    variables: {
+      repo_ids,
+    },
+  });
+
+  const repo = response.data.nodes[0] as IssueValues;
+  setIssues(repo);
 };
