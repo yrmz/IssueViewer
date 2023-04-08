@@ -36,5 +36,5 @@ export interface IssueValues {
 }
 
 export interface State {
-  repo_ids: string;
+  repo_ids: any;
 }

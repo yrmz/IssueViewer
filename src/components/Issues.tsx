@@ -7,6 +7,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { IssueValues, State } from "./types";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { GET_REPOSITORY_ISSUES } from "./queries";
 
 const Issues: React.FC = () => {
   const location = useLocation();
@@ -15,32 +17,21 @@ const Issues: React.FC = () => {
 
   useEffect(() => {
     const getIssues = async () => {
-      const response = await axios({
-        url: "https://api.github.com/graphql",
+      const client = new ApolloClient({
+        uri: "https://api.github.com/graphql",
         headers: {
           Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_KEY}`,
         },
-        method: "POST",
-        data: {
-          query: `{
-            nodes(ids: "${repo_ids}") {
-              ... on Repository {
-                id
-                name
-                issues(first: 10) {
-                  edges {
-                    node {
-                      title
-                    }
-                  }
-                }
-              }
-            }
-          }`,
+        cache: new InMemoryCache(),
+      });
+      const response = await client.query({
+        query: GET_REPOSITORY_ISSUES,
+        variables: {
+          repo_ids,
         },
       });
 
-      const repo = response.data.data.nodes[0] as IssueValues;
+      const repo = response.data.nodes[0] as IssueValues;
       setRepository(repo);
     };
 

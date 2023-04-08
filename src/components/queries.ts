@@ -18,3 +18,21 @@ export const GET_REPOSITORIES = gql`
     }
   }
 `;
+
+export const GET_REPOSITORY_ISSUES = gql`
+  query GetRepositoryIssues($repo_ids: [ID!]!) {
+    nodes(ids: $repo_ids) {
+      ... on Repository {
+        id
+        name
+        issues(first: 10) {
+          edges {
+            node {
+              title
+            }
+          }
+        }
+      }
+    }
+  }
+`;
