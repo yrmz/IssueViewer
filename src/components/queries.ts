@@ -12,6 +12,14 @@ export const GET_REPOSITORIES = gql`
           ... on Repository {
             id
             name
+            description
+            languages(first: 5) {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
           }
         }
       }
