@@ -1,6 +1,14 @@
 export interface Repository {
   id: string;
   name: string;
+  description: string;
+  languages: {
+    edges: {
+      node: {
+        name: string;
+      };
+    };
+  };
 }
 export type SearchForm = {
   query: string;
