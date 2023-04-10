@@ -30,11 +30,11 @@ const Repos: React.FC = () => {
               pageStart: 0,
               initialLoad: false,
               loadMore: loadMore, // loadMore 関数を渡す
-              hasMore: false,
+              hasMore: true,
               useWindow: true,
               threshold: 0,
             }}></InfiniteScrollContent.Provider>
-          <InfiniteScroll loadMore={loadMore}>
+          <InfiniteScroll loadMore={loadMore} hasMore={true}>
             <RepositoryList repositories={repositories} />
           </InfiniteScroll>
         </Paper>
