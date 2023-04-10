@@ -20,9 +20,6 @@ export const GET_REPOSITORIES = gql`
                 }
               }
             }
-            readme {
-              text
-            }
           }
         }
       }

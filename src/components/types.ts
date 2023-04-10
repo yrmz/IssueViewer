@@ -9,9 +9,6 @@ export interface Repository {
       };
     };
   };
-  readme: {
-    text: string;
-  };
 }
 export type SearchForm = {
   query: string;
