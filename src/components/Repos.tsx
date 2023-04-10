@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Header from "./Header";
 import InfiniteScroll from "react-infinite-scroller";
 import { Paper, Container } from "@mui/material";
@@ -6,7 +6,6 @@ import { getRepositories } from "./getQueries";
 import RepositoryList from "./List";
 import SearchForm from "./SearchForm";
 import { searchFormContext, InfiniteScrollContent } from "../contexts";
-import { Repository } from "./types";
 import "./styles.css";
 
 const Repos: React.FC = () => {
@@ -15,7 +14,6 @@ const Repos: React.FC = () => {
     setEndCursor,
     setHasMoreItems,
     query,
-    setQuery,
     endCursor,
     repositories,
     loadMore,
@@ -44,8 +42,7 @@ const Repos: React.FC = () => {
               hasMore: false,
               useWindow: true,
               threshold: 0,
-            }}
-          ></InfiniteScrollContent.Provider>
+            }}></InfiniteScrollContent.Provider>
           <InfiniteScroll loadMore={loadMore}>
             <RepositoryList repositories={repositories} />
           </InfiniteScroll>
