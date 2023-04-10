@@ -10,6 +10,7 @@ export type SearchForm = {
   setEndCursor: (endCursor: string | null) => void;
   setHasMoreItems: (hasMoreItems: boolean) => void;
   setQuery: (query: any) => void;
+  loadMore: () => void;
 };
 
 export interface InfiniteScrollValues {
