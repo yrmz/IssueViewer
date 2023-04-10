@@ -17,7 +17,8 @@ const RepositoryList = ({ repositories }: { repositories: Repository[] }) => {
             }}
             to="/issues"
             state={{ repo_ids: repository.id }}>
-            <ListItemText>{repository.name}</ListItemText>
+            <ListItemText>Repository Name:{repository.name}</ListItemText>{" "}
+            <ListItemText>Descriptiion:{repository.description}</ListItemText>
           </Link>
         </ListItem>
       ))}
