@@ -56,6 +56,16 @@ export const GET_MY_REPOSITORIES = gql`
         node {
           ... on Repository {
             name
+            id
+            name
+            description
+            languages(first: 5) {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
           }
         }
       }
