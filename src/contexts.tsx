@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import {
   SearchForm,
   InfiniteScrollValues,
@@ -7,8 +7,6 @@ import {
 import { getRepositories } from "./components/getQueries";
 
 export const searchFormContext = createContext<SearchForm>(undefined as never);
-
-export const hoge = 2;
 
 export const SearchFormProvider = (props: { children: React.ReactNode }) => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -43,11 +41,45 @@ export const SearchFormProvider = (props: { children: React.ReactNode }) => {
   );
 };
 
-export const InfiniteScrollContent = createContext<InfiniteScrollValues>({
-  pageStart: 0,
-  initialLoad: false,
-  loadMore: () => {},
-  hasMore: false,
-  useWindow: true,
-  threshold: 0,
-});
+export const InfiniteScrollContent = createContext<InfiniteScrollValues>(
+  undefined as never
+);
+
+export const InfiniteScrollProvider = (props: {
+  children: React.ReactNode;
+}) => {
+  const {
+    repositories,
+    setRepositories,
+    setHasMoreItems,
+    endCursor,
+    setEndCursor,
+    query,
+    loadMore,
+  } = useContext(searchFormContext);
+
+  useEffect(() => {
+    getRepositories(
+      query,
+      endCursor,
+      repositories,
+      setRepositories,
+      setHasMoreItems,
+      setEndCursor
+    );
+  }, [query]);
+
+  return (
+    <InfiniteScrollContent.Provider
+      value={{
+        pageStart: 0,
+        initialLoad: false,
+        loadMore: loadMore,
+        hasMore: true,
+        useWindow: true,
+        threshold: 0,
+      }}>
+      {props.children}
+    </InfiniteScrollContent.Provider>
+  );
+};

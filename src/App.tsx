@@ -2,7 +2,7 @@ import React from "react";
 import Repos from "./components/Repos";
 import Issues from "./components/Issues";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { SearchFormProvider } from "./contexts";
+import { InfiniteScrollProvider, SearchFormProvider } from "./contexts";
 
 const App: React.FC = () => {
   return (
@@ -12,7 +12,9 @@ const App: React.FC = () => {
           path="/"
           element={
             <SearchFormProvider>
-              <Repos />
+              <InfiniteScrollProvider>
+                <Repos />
+              </InfiniteScrollProvider>
             </SearchFormProvider>
           }
         />

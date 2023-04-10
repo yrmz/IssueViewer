@@ -25,19 +25,9 @@ const Repos: React.FC = () => {
         <Header />
         <Paper sx={{ padding: 4, marginY: 5 }}>
           <SearchForm />
-          <InfiniteScrollContent.Provider
-            value={{
-              pageStart: 0,
-              initialLoad: false,
-              loadMore: loadMore, // loadMore 関数を渡す
-              hasMore: true,
-              useWindow: true,
-              threshold: 0,
-            }}>
-            <InfiniteScroll loadMore={loadMore} hasMore={true}>
-              <RepositoryList repositories={repositories} />
-            </InfiniteScroll>
-          </InfiniteScrollContent.Provider>
+          <InfiniteScroll loadMore={loadMore} hasMore={true}>
+            <RepositoryList repositories={repositories} />
+          </InfiniteScroll>
         </Paper>
       </Container>
     </div>
