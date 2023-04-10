@@ -4,7 +4,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import { GlobalRepository, IssueValues } from "./types";
 
-const RepositoryList = ({
+const GlobalRepositoryList = ({
   repositories,
 }: {
   repositories: GlobalRepository[];
@@ -50,4 +50,4 @@ export const IssueList = ({ issues }: { issues: IssueValues | undefined }) => {
   );
 };
 
-export default RepositoryList;
+export default GlobalRepositoryList;

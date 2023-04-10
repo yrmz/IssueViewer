@@ -3,7 +3,7 @@ import Header from "./Header";
 import InfiniteScroll from "react-infinite-scroller";
 import { Paper, Container } from "@mui/material";
 import { getGlobalRepositories } from "./getQueries";
-import RepositoryList from "./List";
+import GlobalRepositoryList from "./List";
 import SearchForm from "./SearchForm";
 import { searchFormContext, InfiniteScrollContent } from "../contexts";
 import "./styles.css";
@@ -26,7 +26,7 @@ const Repos: React.FC = () => {
         <Paper sx={{ padding: 4, marginY: 5 }}>
           <SearchForm />
           <InfiniteScroll loadMore={loadMore} hasMore={true}>
-            <RepositoryList repositories={repositories} />
+            <GlobalRepositoryList repositories={repositories} />
           </InfiniteScroll>
         </Paper>
       </Container>
