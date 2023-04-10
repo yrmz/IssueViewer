@@ -1,4 +1,4 @@
-export interface Repository {
+export interface GlobalRepository {
   id: string;
   name: string;
   description: string;
@@ -16,8 +16,8 @@ export interface Repository {
 export type SearchForm = {
   query: string;
   endCursor: string | null;
-  repositories: Repository[];
-  setRepositories: (repositories: Repository[]) => void;
+  repositories: GlobalRepository[];
+  setRepositories: (repositories: GlobalRepository[]) => void;
   setEndCursor: (endCursor: string | null) => void;
   setHasMoreItems: (hasMoreItems: boolean) => void;
   setQuery: (query: any) => void;

@@ -2,20 +2,20 @@ import { useContext, createContext, useState, useEffect } from "react";
 import {
   SearchForm,
   InfiniteScrollValues,
-  Repository,
+  GlobalRepository,
 } from "./components/types";
-import { getRepositories } from "./components/getQueries";
+import { getGlobalRepositories } from "./components/getQueries";
 
 export const searchFormContext = createContext<SearchForm>(undefined as never);
 
 export const SearchFormProvider = (props: { children: React.ReactNode }) => {
-  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repositories, setRepositories] = useState<GlobalRepository[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const [query, setQuery] = useState<any>("");
 
   const loadMore = () => {
-    getRepositories(
+    getGlobalRepositories(
       query,
       endCursor,
       repositories,
@@ -59,7 +59,7 @@ export const InfiniteScrollProvider = (props: {
   } = useContext(searchFormContext);
 
   useEffect(() => {
-    getRepositories(
+    getGlobalRepositories(
       query,
       endCursor,
       repositories,

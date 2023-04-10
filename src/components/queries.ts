@@ -44,3 +44,21 @@ export const GET_REPOSITORY_ISSUES = gql`
     }
   }
 `;
+
+export const GET_MY_REPOSITORIES = gql`
+  query SearchMyRepositories($query: String!, $cursor: String) {
+    search(query: $query, type: REPOSITORY, first: 15, after: $cursor) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          ... on Repository {
+            name
+          }
+        }
+      }
+    }
+  }
+`;

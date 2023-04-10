@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Header from "./Header";
 import InfiniteScroll from "react-infinite-scroller";
 import { Paper, Container } from "@mui/material";
-import { getRepositories } from "./getQueries";
+import { getGlobalRepositories } from "./getQueries";
 import RepositoryList from "./List";
 import SearchForm from "./SearchForm";
 import { searchFormContext, InfiniteScrollContent } from "../contexts";

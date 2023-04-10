@@ -2,9 +2,13 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
-import { Repository, IssueValues } from "./types";
+import { GlobalRepository, IssueValues } from "./types";
 
-const RepositoryList = ({ repositories }: { repositories: Repository[] }) => {
+const RepositoryList = ({
+  repositories,
+}: {
+  repositories: GlobalRepository[];
+}) => {
   return (
     <List>
       {repositories.map((repository, index) => (

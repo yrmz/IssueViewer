@@ -1,12 +1,12 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { GET_REPOSITORIES, GET_REPOSITORY_ISSUES } from "./queries";
-import { IssueValues, Repository } from "./types";
+import { IssueValues, GlobalRepository } from "./types";
 
-export const getRepositories = async (
+export const getGlobalRepositories = async (
   query: string,
   cursor: string | null,
-  repositories: Repository[] | undefined,
-  setRepositories: (repositories: Repository[]) => void,
+  repositories: GlobalRepository[] | undefined,
+  setRepositories: (repositories: GlobalRepository[]) => void,
   setHasMoreItems: (hasMoreItems: boolean) => void,
   setEndCursor: (endCursor: string | null) => void
 ) => {

@@ -1,6 +1,6 @@
 import { Button, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { getRepositories } from "./getQueries";
+import { getGlobalRepositories } from "./getQueries";
 import { searchFormContext } from "../contexts";
 import { useContext } from "react";
 
@@ -12,7 +12,7 @@ const SearchForm = () => {
     event.preventDefault();
     setRepositories([]);
     setEndCursor(null);
-    getRepositories(
+    getGlobalRepositories(
       query,
       null,
       [],
@@ -24,7 +24,7 @@ const SearchForm = () => {
 
   const handleReset = () => {
     setQuery("");
-    getRepositories(
+    getGlobalRepositories(
       query,
       null,
       [],
