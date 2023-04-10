@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "./Header";
 import InfiniteScroll from "react-infinite-scroller";
 import { Paper, Container } from "@mui/material";
@@ -10,62 +10,45 @@ import { Repository } from "./types";
 import "./styles.css";
 
 const Repos: React.FC = () => {
-  const [repositories, setRepositories] = useState<Repository[]>([]);
-  const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
-  const [endCursor, setEndCursor] = useState<string | null>(null);
-  const [query, setQuery] = useState<any>("");
-
-  const loadMore = () => {
-    getRepositories(
-      query,
-      endCursor,
-      repositories,
-      setRepositories,
-      setHasMoreItems,
-      setEndCursor
-    );
-  };
+  const {
+    setRepositories,
+    setEndCursor,
+    setHasMoreItems,
+    query,
+    setQuery,
+    endCursor,
+    repositories,
+    loadMore,
+  } = useContext(searchFormContext);
 
   return (
     <div>
       <Container>
         <Header />
         <Paper sx={{ padding: 4, marginY: 5 }}>
-          <searchFormContext.Provider
+          <SearchForm />
+          <InfiniteScrollContent.Provider
             value={{
-              query,
-              endCursor,
-              repositories,
-              setRepositories,
-              setEndCursor,
-              setHasMoreItems,
-              setQuery,
+              pageStart: 0,
+              initialLoad: false,
+              loadMore: () => {
+                getRepositories(
+                  query,
+                  endCursor,
+                  repositories,
+                  setRepositories,
+                  setHasMoreItems,
+                  setEndCursor
+                );
+              },
+              hasMore: false,
+              useWindow: true,
+              threshold: 0,
             }}
-          >
-            <SearchForm />
-            <InfiniteScrollContent.Provider
-              value={{
-                pageStart: 0,
-                initialLoad: false,
-                loadMore: () => {
-                  getRepositories(
-                    query,
-                    endCursor,
-                    repositories,
-                    setRepositories,
-                    setHasMoreItems,
-                    setEndCursor
-                  );
-                },
-                hasMore: false,
-                useWindow: true,
-                threshold: 0,
-              }}
-            ></InfiniteScrollContent.Provider>
-            <InfiniteScroll loadMore={loadMore}>
-              <RepositoryList repositories={repositories} />
-            </InfiniteScroll>
-          </searchFormContext.Provider>
+          ></InfiniteScrollContent.Provider>
+          <InfiniteScroll loadMore={loadMore}>
+            <RepositoryList repositories={repositories} />
+          </InfiniteScroll>
         </Paper>
       </Container>
     </div>
