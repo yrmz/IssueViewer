@@ -37,8 +37,7 @@ export const SearchFormProvider = (props: { children: React.ReactNode }) => {
         setHasMoreItems,
         setQuery,
         loadMore,
-      }}
-    >
+      }}>
       {props.children}
     </searchFormContext.Provider>
   );

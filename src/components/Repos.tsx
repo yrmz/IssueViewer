@@ -33,10 +33,11 @@ const Repos: React.FC = () => {
               hasMore: true,
               useWindow: true,
               threshold: 0,
-            }}></InfiniteScrollContent.Provider>
-          <InfiniteScroll loadMore={loadMore} hasMore={true}>
-            <RepositoryList repositories={repositories} />
-          </InfiniteScroll>
+            }}>
+            <InfiniteScroll loadMore={loadMore} hasMore={true}>
+              <RepositoryList repositories={repositories} />
+            </InfiniteScroll>
+          </InfiniteScrollContent.Provider>
         </Paper>
       </Container>
     </div>
