@@ -22,6 +22,7 @@ export type SearchForm = {
   setHasMoreItems: (hasMoreItems: boolean) => void;
   setQuery: (query: any) => void;
   loadMore: () => void;
+  isGlobal: boolean;
 };
 
 export interface InfiniteScrollValues {

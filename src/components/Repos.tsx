@@ -15,6 +15,7 @@ const Repos: React.FC = () => {
     setHasMoreItems,
     query,
     endCursor,
+    isGlobal,
     repositories,
     loadMore,
   } = useContext(searchFormContext);
@@ -26,7 +27,7 @@ const Repos: React.FC = () => {
         <Paper sx={{ padding: 4, marginY: 5 }}>
           <SearchForm />
           <InfiniteScroll loadMore={loadMore} hasMore={true}>
-            <GlobalRepositoryList repositories={repositories} />
+            {isGlobal && <GlobalRepositoryList repositories={repositories} />}
           </InfiniteScroll>
         </Paper>
       </Container>

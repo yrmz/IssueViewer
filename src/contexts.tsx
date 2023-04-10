@@ -13,6 +13,7 @@ export const SearchFormProvider = (props: { children: React.ReactNode }) => {
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const [query, setQuery] = useState<any>("");
+  const [isGlobal, setStatus] = useState<boolean>(true);
 
   const loadMore = () => {
     getGlobalRepositories(
@@ -30,6 +31,7 @@ export const SearchFormProvider = (props: { children: React.ReactNode }) => {
         query,
         endCursor,
         repositories,
+        isGlobal,
         setRepositories,
         setEndCursor,
         setHasMoreItems,
