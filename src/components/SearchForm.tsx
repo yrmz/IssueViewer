@@ -22,6 +22,18 @@ const SearchForm = () => {
     );
   };
 
+  const handleReset = () => {
+    setQuery("");
+    getRepositories(
+      query,
+      null,
+      [],
+      setRepositories,
+      setHasMoreItems,
+      setEndCursor
+    );
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Box>
@@ -37,6 +49,9 @@ const SearchForm = () => {
         />
         <Button variant="outlined" type="submit">
           Search
+        </Button>
+        <Button variant="outlined" onClick={handleReset}>
+          Reset
         </Button>
       </Box>
     </form>
