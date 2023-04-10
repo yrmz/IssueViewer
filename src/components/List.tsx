@@ -2,7 +2,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
-import { Repository } from "./types";
+import { Repository, IssueValues } from "./types";
 
 const RepositoryList = ({ repositories }: { repositories: Repository[] }) => {
   return (
@@ -19,6 +19,18 @@ const RepositoryList = ({ repositories }: { repositories: Repository[] }) => {
             state={{ repo_ids: repository.id }}>
             <ListItemText>{repository.name}</ListItemText>
           </Link>
+        </ListItem>
+      ))}
+    </List>
+  );
+};
+
+export const IssueList = ({ issues }: { issues: IssueValues | undefined }) => {
+  return (
+    <List>
+      {issues?.issues.edges.map((issue) => (
+        <ListItem key={issue.node.title} divider>
+          <ListItemText>{issue.node.title}</ListItemText>
         </ListItem>
       ))}
     </List>

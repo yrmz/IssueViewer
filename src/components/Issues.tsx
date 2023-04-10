@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { useLocation, Link } from "react-router-dom";
 import { Paper, Container, Box, Button } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import { IssueValues, State } from "./types";
 import { getIssues } from "./getQueries";
+import { IssueList } from "./List";
 
 const Issues: React.FC = () => {
   const location = useLocation();
@@ -29,17 +27,10 @@ const Issues: React.FC = () => {
           </Button>
           <h2>{issues?.name} Issues:</h2>
           <Box>
-            <List>
-              {issues?.issues.edges.map((issue) => (
-                <ListItem key={issue.node.title} divider>
-                  <ListItemText>{issue.node.title}</ListItemText>
-                </ListItem>
-              ))}
-            </List>
+            <IssueList issues={issues} />
           </Box>
         </Paper>
       </Container>
-      <ul></ul>
     </div>
   );
 };
