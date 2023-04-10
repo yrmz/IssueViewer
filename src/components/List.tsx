@@ -17,8 +17,16 @@ const RepositoryList = ({ repositories }: { repositories: Repository[] }) => {
             }}
             to="/issues"
             state={{ repo_ids: repository.id }}>
-            <ListItemText>Repository Name:{repository.name}</ListItemText>{" "}
+            <ListItemText>Repository Name:{repository.name}</ListItemText>
             <ListItemText>Descriptiion:{repository.description}</ListItemText>
+            <ListItemText>Used Languages</ListItemText>
+            {repository.languages.edges.map(
+              (language: { node: { name: string } }) => (
+                <ListItemText key={language.node.name}>
+                  {language.node.name}
+                </ListItemText>
+              )
+            )}
           </Link>
         </ListItem>
       ))}
@@ -31,7 +39,7 @@ export const IssueList = ({ issues }: { issues: IssueValues | undefined }) => {
     <List>
       {issues?.issues.edges.map((issue) => (
         <ListItem key={issue.node.title} divider>
-          <ListItemText>{issue.node.title}</ListItemText>
+          <ListItemText primary={issue.node.title} />
         </ListItem>
       ))}
     </List>

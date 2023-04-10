@@ -27,9 +27,9 @@ export const getRepositories = async (
       },
     });
 
-    const newRepositories = response.data.search.edges.map(
-      (edge: any) => edge.node
-    );
+    const newRepositories = response.data.search.edges
+      ? response.data.search.edges.map((edge: any) => edge.node)
+      : [];
 
     // repositories 引数が undefined の場合は空の配列を作成する
     const updatedRepositories = repositories

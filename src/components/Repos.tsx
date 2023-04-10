@@ -29,16 +29,7 @@ const Repos: React.FC = () => {
             value={{
               pageStart: 0,
               initialLoad: false,
-              loadMore: () => {
-                getRepositories(
-                  query,
-                  endCursor,
-                  repositories,
-                  setRepositories,
-                  setHasMoreItems,
-                  setEndCursor
-                );
-              },
+              loadMore: loadMore, // loadMore 関数を渡す
               hasMore: false,
               useWindow: true,
               threshold: 0,

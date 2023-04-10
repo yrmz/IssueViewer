@@ -4,6 +4,9 @@ export interface Repository {
   description: string;
   languages: {
     edges: {
+      map(
+        arg0: (language: { node: { name: string } }) => JSX.Element
+      ): import("react").ReactNode;
       node: {
         name: string;
       };
