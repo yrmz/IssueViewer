@@ -28,7 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +50,10 @@
     ]
   },
   "devDependencies": {
+    "@eddeee888/gcg-typescript-resolver-files": "^0.4.0",
+    "@graphql-codegen/cli": "3.3.0",
+    "@graphql-codegen/client-preset": "3.0.0",
+    "@graphql-codegen/introspection": "^3.0.1",
     "@types/react-infinite-scroller": "^1.2.3",
     "@types/serviceworker": "^0.0.63",
     "@types/styled-components": "^5.1.26"

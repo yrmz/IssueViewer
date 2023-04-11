@@ -1,0 +1,25 @@
+query SearchMyRepositories($query: String!, $cursor: String) {
+  search(query: $query, type: REPOSITORY, first: 15, after: $cursor) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    edges {
+      node {
+        ... on Repository {
+          name
+          id
+          name
+          description
+          languages(first: 5) {
+            edges {
+              node {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

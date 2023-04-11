@@ -1,0 +1,15 @@
+query GetRepositoryIssues($repo_ids: [ID!]!) {
+  nodes(ids: $repo_ids) {
+    ... on Repository {
+      id
+      name
+      issues(first: 10) {
+        edges {
+          node {
+            title
+          }
+        }
+      }
+    }
+  }
+}
