@@ -32,7 +32,9 @@ export const getGlobalRepositories = async (
     });
 
     const newRepositories = response.data.search.edges
-      ? response.data.search.edges.map((edge: any) => edge.node)
+      ? response.data.search.edges.map(
+          (edge: { node: React.ReactNode }) => edge.node
+        )
       : [];
 
     // repositories 引数が undefined の場合は空の配列を作成する
@@ -74,7 +76,9 @@ export const getLocalRepositories = async (
     });
 
     const newRepositories = response.data.search.edges
-      ? response.data.search.edges.map((edge: any) => edge.node)
+      ? response.data.search.edges.map(
+          (edge: { node: React.ReactNode }) => edge.node
+        )
       : [];
 
     // repositories 引数が undefined の場合は空の配列を作成する
