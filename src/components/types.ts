@@ -1,18 +1,3 @@
-export interface GlobalRepository {
-  id: string;
-  name: string;
-  description: string;
-  languages: {
-    edges: {
-      map(
-        arg0: (language: { node: { name: string } }) => JSX.Element
-      ): import("react").ReactNode;
-      node: {
-        name: string;
-      };
-    };
-  };
-}
 export interface LocalRepository {
   id: string;
   name: string;
@@ -31,13 +16,10 @@ export interface LocalRepository {
 export type SearchForm = {
   query: string;
   endCursor: string | null;
-  repositories: GlobalRepository[];
-  setRepositories: (repositories: GlobalRepository[]) => void;
   setEndCursor: (endCursor: string | null) => void;
   setHasMoreItems: (hasMoreItems: boolean) => void;
   setQuery: (query: any) => void;
   loadMore: () => void;
-  isGlobal: boolean;
 };
 
 export interface InfiniteScrollValues {

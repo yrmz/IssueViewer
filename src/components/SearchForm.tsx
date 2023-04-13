@@ -1,37 +1,19 @@
 import { Button, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { getGlobalRepositories } from "./getQueries";
 import { searchFormContext } from "../contexts";
 import { useContext } from "react";
 
-const SearchForm = () => {
-  const { setRepositories, setEndCursor, setHasMoreItems, query, setQuery } =
-    useContext(searchFormContext);
+const SearchForm = ({ onSubmit }: { onSubmit: () => void }) => {
+  const { query, setQuery } = useContext(searchFormContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setRepositories([]);
-    setEndCursor(null);
-    getGlobalRepositories(
-      query,
-      null,
-      [],
-      setRepositories,
-      setHasMoreItems,
-      setEndCursor
-    );
+    onSubmit();
+    setQuery(event.currentTarget.Search.value);
   };
 
   const handleReset = () => {
     setQuery("");
-    getGlobalRepositories(
-      query,
-      null,
-      [],
-      setRepositories,
-      setHasMoreItems,
-      setEndCursor
-    );
   };
 
   return (
@@ -46,6 +28,7 @@ const SearchForm = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           sx={{ marginRight: 3 }}
+          name="Search"
         />
         <Button variant="outlined" type="submit">
           Search

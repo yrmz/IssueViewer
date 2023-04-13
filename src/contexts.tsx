@@ -1,38 +1,19 @@
 import { useContext, createContext, useState, useEffect } from "react";
-import {
-  SearchForm,
-  InfiniteScrollValues,
-  GlobalRepository,
-} from "./components/types";
-import { getGlobalRepositories } from "./components/getQueries";
+import { SearchForm, InfiniteScrollValues } from "./components/types";
 
 export const searchFormContext = createContext<SearchForm>(undefined as never);
 
 export const SearchFormProvider = (props: { children: React.ReactNode }) => {
-  const [repositories, setRepositories] = useState<GlobalRepository[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const [query, setQuery] = useState<string>("");
-  const [isGlobal, setStatus] = useState<boolean>(true);
-
-  const loadMore = () => {
-    getGlobalRepositories(
-      query,
-      endCursor,
-      repositories,
-      setRepositories,
-      setHasMoreItems,
-      setEndCursor
-    );
-  };
+  // 再度APIを叩く
+  const loadMore = () => {};
   return (
     <searchFormContext.Provider
       value={{
         query,
         endCursor,
-        repositories,
-        isGlobal,
-        setRepositories,
         setEndCursor,
         setHasMoreItems,
         setQuery,
@@ -50,26 +31,7 @@ export const InfiniteScrollContent = createContext<InfiniteScrollValues>(
 export const InfiniteScrollProvider = (props: {
   children: React.ReactNode;
 }) => {
-  const {
-    repositories,
-    setRepositories,
-    setHasMoreItems,
-    endCursor,
-    setEndCursor,
-    query,
-    loadMore,
-  } = useContext(searchFormContext);
-
-  useEffect(() => {
-    getGlobalRepositories(
-      query,
-      endCursor,
-      repositories,
-      setRepositories,
-      setHasMoreItems,
-      setEndCursor
-    );
-  }, [query]);
+  const { loadMore } = useContext(searchFormContext);
 
   return (
     <InfiniteScrollContent.Provider
