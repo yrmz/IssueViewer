@@ -1,18 +1,3 @@
-export interface LocalRepository {
-  id: string;
-  name: string;
-  description: string;
-  languages: {
-    edges: {
-      map(
-        arg0: (language: { node: { name: string } }) => JSX.Element
-      ): import("react").ReactNode;
-      node: {
-        name: string;
-      };
-    };
-  };
-}
 export type SearchForm = {
   query: string;
   endCursor: string | null;

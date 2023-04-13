@@ -2,7 +2,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
-import { IssueValues, LocalRepository } from "./types";
+import { IssueValues } from "./types";
 import { useQuery } from "@apollo/client";
 import {
   SearchRepositoriesDocument,

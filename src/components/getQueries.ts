@@ -1,10 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import {
-  GET_REPOSITORIES,
-  GET_REPOSITORY_ISSUES,
-  GET_MY_REPOSITORIES,
-} from "./queries";
-import { IssueValues, LocalRepository } from "./types";
+import { GET_REPOSITORY_ISSUES } from "./queries";
+import { IssueValues } from "./types";
 
 export const getIssues = async (
   repo_ids: string,
