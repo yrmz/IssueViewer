@@ -1,7 +1,7 @@
 import React from "react";
-import Repos from "./components/Repos";
+import { Route, Routes } from "react-router-dom";
 import Issues from "./components/Issues";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Repos from "./components/Repos";
 import { InfiniteScrollProvider, SearchFormProvider } from "./contexts";
 
 const App: React.FC = () => {
@@ -19,6 +19,8 @@ const App: React.FC = () => {
           }
         />
         <Route path="/issues" element={<Issues />} />
+        {/* パスに一致しない場合のページを用意してあげるといいかも */}
+        <Route path="*" element={<h1>404</h1>} />
       </Routes>
     </div>
   );
