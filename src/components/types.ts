@@ -20,14 +20,18 @@ export interface Issue {
   title: string;
 }
 
-export interface IssueValues {
+export interface IssueNode{
   id: string;
   name: string;
   issues: {
     edges: {
       node: Issue;
     }[];
-  };
+  }  
+}
+
+export interface IssueValues {
+  nodes: IssueNode[]
 }
 
 export interface State {

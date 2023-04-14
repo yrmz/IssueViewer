@@ -1,14 +1,15 @@
+import { useQuery } from "@apollo/client";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { FC } from "react";
 import { Link } from "react-router-dom";
-import { IssueValues } from "./types";
-import { useQuery } from "@apollo/client";
 import {
+  Repository,
   SearchRepositoriesDocument,
   SearchRepositoriesQuery,
-  Repository,
 } from "../generated/graphql";
+import { IssueNode } from "./types";
 
 // 公開されているすべてのリポジトリを検索
 export const GlobalRepositoryList = ({
@@ -40,9 +41,10 @@ export const GlobalRepositoryList = ({
                   fontWeight: "bold",
                 }}
                 to="/issues"
-                state={{ repo_ids: edge.id }}>
+                // stateでの渡し方を見つけて使ってるのいいですね！
+                state={{ repoIds: edge.id }}>
                 <ListItemText>Repository Name:{edge.name}</ListItemText>
-                <ListItemText>Descriptiion:{edge.description}</ListItemText>
+                <ListItemText>Description:{edge.description}</ListItemText>
               </Link>
             </ListItem>
           ))}
@@ -50,10 +52,10 @@ export const GlobalRepositoryList = ({
   );
 };
 
-export const IssueList = ({ issues }: { issues: IssueValues | undefined }) => {
+export const IssueList:FC<{ node: IssueNode  }> = ({ node }) => {
   return (
     <List>
-      {issues?.issues.edges.map((issue) => (
+      {node.issues.edges.map((issue) => (
         <ListItem key={issue.node.title} divider>
           <ListItemText primary={issue.node.title} />
         </ListItem>

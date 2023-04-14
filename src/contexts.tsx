@@ -1,8 +1,9 @@
-import { useContext, createContext, useState, useEffect } from "react";
-import { SearchForm, InfiniteScrollValues } from "./components/types";
+import { createContext, useContext, useState } from "react";
+import { InfiniteScrollValues, SearchForm } from "./components/types";
 
 export const searchFormContext = createContext<SearchForm>(undefined as never);
 
+// 無限スクロール実装できてるのいいですね！
 export const SearchFormProvider = (props: { children: React.ReactNode }) => {
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
   const [endCursor, setEndCursor] = useState<string | null>(null);

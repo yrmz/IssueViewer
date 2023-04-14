@@ -1,11 +1,12 @@
-import { Button, Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { searchFormContext } from "../contexts";
 import { useContext } from "react";
+import { searchFormContext } from "../contexts";
 
 const SearchForm = ({ onSubmit }: { onSubmit: () => void }) => {
   const { query, setQuery } = useContext(searchFormContext);
 
+  // event.preventDefault();を呼び出してあげてるのいいですね！
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit();

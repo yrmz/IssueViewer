@@ -1,10 +1,10 @@
+import { Container, Paper } from "@mui/material";
 import React, { useContext, useState } from "react";
-import Header from "./Header";
 import InfiniteScroll from "react-infinite-scroller";
-import { Paper, Container } from "@mui/material";
+import { searchFormContext } from "../contexts";
+import Header from "./Header";
 import { GlobalRepositoryList } from "./List";
 import SearchForm from "./SearchForm";
-import { searchFormContext, InfiniteScrollContent } from "../contexts";
 import "./styles.css";
 
 const Repos: React.FC = () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Issues from "./components/Issues";
+import { Issues } from "./components/Issues";
 import Repos from "./components/Repos";
 import { InfiniteScrollProvider, SearchFormProvider } from "./contexts";
 
@@ -11,6 +11,7 @@ const App: React.FC = () => {
         <Route
           path="/"
           element={
+            // ここはルーティングをすることが責務の関数なので、コンポーネントの実装はReposに書いた方が良いです。
             <SearchFormProvider>
               <InfiniteScrollProvider>
                 <Repos />

@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { Box, Button, Container, Paper } from "@mui/material";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useIssues } from "../hooks/useQueries";
 import Header from "./Header";
-import { useLocation, Link } from "react-router-dom";
-import { Paper, Container, Box, Button } from "@mui/material";
-import { IssueValues, State } from "./types";
-import { getIssues } from "./getQueries";
 import { IssueList } from "./List";
 
-const Issues: React.FC = () => {
+export const Issues: React.FC<{}> = () => {
   const location = useLocation();
-  const { repo_ids } = location.state as State;
-  const [issues, setIssues] = useState<IssueValues>();
+  // プログラム内の命名はキャメル型なので、repoIdsとして扱った方が良さそう
+  const repoIds = location.state.repoIds as string;
+  const { loading, error, data: issueValues } = useIssues(repoIds);
 
-  useEffect(() => {
-    getIssues(repo_ids, setIssues);
-  }, [repo_ids]);
+  // 仕様にもよりますが、ローディングを入れてあげれば、ユーザーもわかりやすいですしundefinedをなくせるので良いかも。
+  if (loading || !issueValues?.nodes?.length) {
+    return <div>Loading...</div>;
+  }
+  if (error) return <div>Error...</div>;
 
+  const issueNode = issueValues.nodes[0];
   return (
     <div>
       <Header />
@@ -25,9 +28,9 @@ const Issues: React.FC = () => {
               Return to Top
             </Link>
           </Button>
-          <h2>{issues?.name} Issues:</h2>
+          <h2>{issueNode.name} Issues:</h2>
           <Box>
-            <IssueList issues={issues} />
+            <IssueList node={issueNode} />
           </Box>
         </Paper>
       </Container>
@@ -35,4 +38,6 @@ const Issues: React.FC = () => {
   );
 };
 
-export default Issues;
+// プロジェクトにもよると思うのですが、defaultを使ってしまうと規模が大きくなった時に
+// どのコンポーネントが呼ばれているのかわかりずらくなってメンテが大変になるほで取り扱いには注意した方が良いです。
+// export default Issues;
